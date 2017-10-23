@@ -4,13 +4,12 @@ class Parser(object):
     def parse(file_name):
         """
             Read in the file, and break it up into trigrams.
-
             return the list of trigrams.
         """
-        file_to_read = open(file_name)
+        fp = open(file_name)
         trigrams = []
 
-        for line in file_to_read.readline():
+        for line in fp.readlines():
             if len(line) < 3:
                 trigrams.append("ANY")
                 break
