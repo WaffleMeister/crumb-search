@@ -4,7 +4,6 @@ from src.trigramIndexer.index.elastic_search_index import ElasticSearchIndex
 from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
 from src.trigramIndexer.parser.parser import Parser
 
-
 class Indexer(object):
     """
         This class takes in a directory, runs a DFS on that directory, and indexes
@@ -34,6 +33,8 @@ class Indexer(object):
             else:
                 trigram_list = Parser.parse(file_name)
                 self.index.store_in_index(trigram_list, file_name)
+        
+        return self.index
 
     def __include_file(self, file_name):
         if len(self.include_files) == 0:

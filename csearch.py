@@ -1,7 +1,6 @@
 import argparse
 from src.trigramIndexer.indexer import Indexer
 
-
 """
     This script asks for a directory path, indexes that directory, 
     and allows the user to type in regex queries for that indexed set.
@@ -41,9 +40,6 @@ include_files = ["c", "java", "py", "json", "rb"]
 args = parser.parse_args()
 
 indexer = Indexer(include_files, args.elastic)
-
-if args.verbose:
-    print("Verbosity turned on.")
 
 if (args.directory is not None):
     index_directory(indexer, args.directory)

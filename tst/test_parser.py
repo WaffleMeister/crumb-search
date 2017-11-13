@@ -1,7 +1,6 @@
 import unittest
 import os
 from src.trigramIndexer.parser.parser import Parser
-from src.trigramIndexer.index.elastic_search_index import ElasticSearchIndex
 
 class TestParser(unittest.TestCase):
 
