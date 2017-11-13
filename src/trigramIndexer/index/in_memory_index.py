@@ -1,4 +1,4 @@
-class InMemoryIndexer:
+class InMemoryIndexer(object):
 
     def __init__(self, index = {}):
         self.index = index
@@ -7,7 +7,6 @@ class InMemoryIndexer:
         return NotImplementedError
 
     def store_in_index(self, trigram_list, file_name):
-
         if self.index[file_name] is None:
             self.index[file_name] = []
         
