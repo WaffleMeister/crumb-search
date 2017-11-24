@@ -23,7 +23,7 @@ class Indexer(object):
             This function takes in a file path, and indexes all applicable files
             in that path.
         """
-        file_names = [file_name for file_name in os.listdir(file_path) if self.__include_file(file_name)]
+        file_names = [file_path + "/" + file_name for file_name in os.listdir(file_path) if self.__include_file(file_name)]
 
         # Perform a DFS on a given directory. Iterate over all the files,
         # recurse on directories.

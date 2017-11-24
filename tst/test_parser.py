@@ -11,3 +11,7 @@ class TestParser(unittest.TestCase):
         file_path = os.path.abspath("tst/test_data/file")
         trigram_list = Parser.parse(file_path)
         self.assertEqual(len(trigram_list), 61)
+
+    def test_parse_java(self):
+        file_path = os.path.abspath("tst/test_data/test_directory/testJava.java")
+        trigram_list = 

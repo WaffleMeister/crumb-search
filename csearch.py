@@ -23,27 +23,47 @@ from src.trigramIndexer.indexer import Indexer
 # use: /Users/andromeda/GIT/planout4j
 # crumbSearch -i DIRECTORY -s SEARCH_TERM
 
-parser = argparse.ArgumentParser(description=
-                    "CrumbSearch; quick search for matching text over a directory corpus.")
 
-parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE>",
-                    action="store_true", default=False)
-parser.add_argument("-i", "--index", action="store", dest="directory",
-                    help="Index the specified directory.")
-parser.add_argument("-s", "--search", action="store", dest="search_term",
-                    help="The regex to search for.")
-parser.add_argument("-d", "--depth", action="store", dest="index_depth",
-                    help="Indexer directory depth (directories traversed)")
+def main():  
+    include_files = ["c", "java", "py", "json", "rb"]
 
-include_files = ["c", "java", "py", "json", "rb"]
+    parser = argparse.ArgumentParser(description=
+                        "CrumbSearch; quick search for matching text over a directory corpus.")
 
-args = parser.parse_args()
+    parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE>",
+                        action="store_true", default=False)
+    parser.add_argument("-i", "--index", action="store", dest="directory",
+                        help="Index the specified directory.")
+    parser.add_argument("-s", "--search", action="store", dest="search_term",
+                        help="Regular expression to search for.")
+    parser.add_argument("-d", "--depth", action="store", dest="index_depth",
+                        help="Indexer directory depth (directories traversed)")
 
-indexer = Indexer(include_files, args.elastic)
+    args = parser.parse_args()
+    indexer = Indexer(include_files, args.elastic)
 
-if (args.directory is not None):
-    index_directory(indexer, args.directory)
 
-def index_directory(indexer, file_path):
-    print("Going to index directory: " + file_path)
-    indexer.index_directory(file_path)
+    index_directory(args, indexer)
+    search_action(args, indexer.index, args.search_term)
+
+
+def search_action(args, index, search_term):
+    if (args.search_term is not None):
+        print("Beginning search for: " + search_term)
+        
+
+
+def index_directory(args, indexer):
+    if (args.directory is not None):
+        print("Indexing directory: " + args.directory)
+        indexer.index_directory(args.directory)
+        indexer.index.persist()
+    else:
+        try:
+            indexer.index.load()
+        except IOError:
+            print("Index not found on disc. Use the -i option to specify a directory to index.")
+            quit()
+
+if __name__ == "__main__":
+    main()
