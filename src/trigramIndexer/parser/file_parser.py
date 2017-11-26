@@ -1,4 +1,4 @@
-class Parser(object):
+class FileParser(object):
 
     @staticmethod
     def parse(file_name):

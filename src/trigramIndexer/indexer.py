@@ -2,7 +2,7 @@ import os
 
 from src.trigramIndexer.index.elastic_search_index import ElasticSearchIndex
 from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
-from src.trigramIndexer.parser.parser import Parser
+from src.trigramIndexer.parser.file_parser import FileParser
 
 class Indexer(object):
     """
@@ -31,7 +31,7 @@ class Indexer(object):
             if os.path.isdir(file_name):
                 self.index_directory(file_name)
             else:
-                trigram_list = Parser.parse(file_name)
+                trigram_list = FileParser.parse(file_name)
                 self.index.store_in_index(trigram_list, file_name)
         
         return self.index
