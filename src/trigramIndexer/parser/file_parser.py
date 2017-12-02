@@ -11,7 +11,7 @@ class FileParser(object):
 
         for line in fp.readlines():
             if len(line) < 3:
-                trigrams.append("ANY")
+                trigrams.append("+")
             for i in range(len(line) - 2):
                 trigrams.append(line[i : i + 3])
 

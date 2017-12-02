@@ -20,11 +20,6 @@ def main():
 
     index = None
 
-    if (args.elastic):
-
-    else:
-        indexer = 
-
     args = parser.parse_args()
     indexer = Indexer(include_files, args.elastic)
 
@@ -32,6 +27,10 @@ def main():
         print("Indexing directory: " + args.directory)
         indexer.index_directory(args.directory)
         indexer.index.persist()
+    else:
+        # Assume the index exists locally somewhere, check for that index file, 
+        # If it doesn't exist, print error and quit.
+        pass
 
 if __name__ == "__main__":
     main()

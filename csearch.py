@@ -31,6 +31,7 @@ def main():
 
     args = parser.parse_args()
     
+    indexer = Indexer()
 
     search_action(args, indexer.index, args.search_term)
 
@@ -39,7 +40,6 @@ def search_action(args, index, search_term):
     if (args.search_term is not None):
         print("Beginning search for: " + search_term)
     index.get_matching_files()
-
 
 if __name__ == "__main__":
     main()
