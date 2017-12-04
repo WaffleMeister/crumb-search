@@ -18,6 +18,7 @@ class InMemoryIndexer(object):
         return set.intersection(matching_files)
 
     def store_in_index(self, trigram_list, file_name):
+        # All files are added to the ANY(+) set.
         self.trigramToFileSetMap['+'].add(file_name)
 
         self.initialized = True

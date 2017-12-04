@@ -19,20 +19,22 @@ class Indexer(object):
         self.include_files = include_files
 
     def index_directory(self, file_path):
+
+        print("The file path received is: " + file_path)
         """
             This function takes in a file path, and indexes all applicable files
             in that path.
         """
-        file_names = [file_path + "/" + file_name for file_name in os.listdir(file_path) if self.__include_file(file_name)]
+        file_paths = [file_path + "\\" + searchable_file for searchable_file in os.listdir(file_path) if self.__include_file(searchable_file)]
 
         # Perform a DFS on a given directory. Iterate over all the files,
         # recurse on directories.
-        for file_name in file_names:
-            if os.path.isdir(file_name):
-                self.index_directory(file_name)
+        for file_path in file_paths:
+            if os.path.isdir(file_path):
+                self.index_directory(file_path)
             else:
-                trigram_list = FileParser.parse(file_name)
-                self.index.store_in_index(trigram_list, file_name)
+                trigram_list = FileParser.parse(file_path)
+                self.index.store_in_index(trigram_list, file_path)
         
         return self.index
 
