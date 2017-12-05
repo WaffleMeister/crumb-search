@@ -17,4 +17,6 @@ class FileParser(object):
             for i in range(len(line) - 2):
                 trigrams.append(line[i : i + 3])
 
+        print("Done indexing: " + file_name)
+
         return trigrams

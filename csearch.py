@@ -1,5 +1,6 @@
 import argparse
-from src.trigramIndexer.indexer import Indexer
+from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
+from src.trigramIndexer.parser.query_parser import QueryParser
 
 """
     This script asks for a directory path, indexes that directory, 
@@ -10,7 +11,6 @@ from src.trigramIndexer.indexer import Indexer
 
 """
     Options: 
-    -i: index a directory
     -q: string query to use
     -e: use Elastic search instead of localized search
 """
@@ -26,20 +26,28 @@ def main():
 
     parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE>",
                         action="store_true", default=False)
+    parser.add_argument("-f", "--index_file", help="""The index file to use. If not specified, a default file
+                                 will be used instead. Please note that the default file 
+                                 is just an expected location on disk; there is no default 
+                                 index and you are expected to create one with cindex.""",
+                        action="store_true", dest="index_file", default="index_file")
     parser.add_argument("-s", "--search", required=True, action="store", dest="search_term",
                         help="Regular expression to search for.")
 
     args = parser.parse_args()
-    
-    indexer = Indexer()
 
-    search_action(args, indexer.index, args.search_term)
+    index = None
+    try:
+        index = InMemoryIndexer()
+        index.load(args.index_file)
+        print("index loaded successfully!")
+    except FileNotFoundError as f:
+        quit("No index file found on disk. Run cindex to create an index.")
 
+    n_grams = QueryParser.parse_search_query(args.search_term)
 
-def search_action(args, index, search_term):
-    if (args.search_term is not None):
-        print("Beginning search for: " + search_term)
-    index.get_matching_files()
+    joined_grams = " ".join(n_grams)
+    print("Your N Grams are: " + joined_grams)
 
 if __name__ == "__main__":
     main()
