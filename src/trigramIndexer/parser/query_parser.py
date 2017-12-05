@@ -20,6 +20,8 @@ class QueryParser:
             return IOError("Search query is blank.")
         if (search_query[0] in ["*", "+", "?"]):
             return IOError("Invalid REGEX passed in.")
+        if (len(search_query) < 3):
+            return IOError("Search query must be >= 3 characters.")
 
         # Case where search query is too small, search all files.
         if len(search_query) <= 2:
@@ -30,15 +32,22 @@ class QueryParser:
         return_set = set()
 
         while i < len(search_query) - 2:
-            n_gram = search_query[i : i + 3]
+            n_gram = search_query[i: i + 3]
 
             if ("*" in n_gram):
                 return_set.add('+')
-            elif (i + 3  < len(search_query) and search_query[i + 3] == '*'):
+            elif (i + 3 < len(search_query) and search_query[i + 3] == '*'):
                 return_set.add('+')
             else:
-                return_set.add(n_gram) 
+                return_set.add(n_gram)
 
-            i += 1           
+            i += 1
 
-        return return_set
+        return QueryParser._simplify_query(return_set)
+
+    @staticmethod
+    def _simplify_query(search_query):
+        if len(search_query) > 1 and '+' in search_query:
+            search_query.discard('+')
+        
+        return search_query

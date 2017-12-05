@@ -30,7 +30,7 @@ def main():
                                  will be used instead. Please note that the default file 
                                  is just an expected location on disk; there is no default 
                                  index and you are expected to create one with cindex.""",
-                        action="store_true", dest="index_file", default="index_file")
+                        action="store", dest="index_file", default="index_file")
     parser.add_argument("-s", "--search", required=True, action="store", dest="search_term",
                         help="Regular expression to search for.")
 
@@ -46,8 +46,18 @@ def main():
 
     n_grams = QueryParser.parse_search_query(args.search_term)
 
-    joined_grams = " ".join(n_grams)
-    print("Your N Grams are: " + joined_grams)
+    print("Your N Grams are: " + list_to_string(n_grams))
+
+    matching_files = index.get_matching_files(n_grams)
+
+    print ("Your matching files are: " + list_to_string(matching_files))
+
+
+
+
+def list_to_string(collection, delimeter = " "):
+    return delimeter.join(collection)
+
 
 if __name__ == "__main__":
     main()
