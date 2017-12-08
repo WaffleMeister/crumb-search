@@ -8,14 +8,14 @@ class InMemoryIndexer(object):
         self.initialized = False
         
     def get_matching_files(self, trigram_list):
-        matching_files = set()
+        matching_files = []
 
         for trigram in trigram_list:
             if trigram not in self.trigramToFileSetMap:
                 return set() # No matching files.
-            matching_files.add(self.trigramToFileSetMap[trigram])
+            matching_files.append(self.trigramToFileSetMap[trigram])
 
-        return set.intersection(matching_files)
+        return set.intersection(*matching_files)
 
     def store_in_index(self, trigram_list, file_name):
         # All files are added to the ANY(+) set.
