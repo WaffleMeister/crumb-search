@@ -1,4 +1,5 @@
 import argparse
+import re
 from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
 from src.trigramIndexer.parser.query_parser import QueryParser
 
@@ -24,6 +25,8 @@ def main():
                             program.
                         """)
 
+    parser.add_argument("-v", "--verbose", help="Enable verbose logging",
+                        action="store_true", default=True)
     parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE>",
                         action="store_true", default=False)
     parser.add_argument("-f", "--index_file", help="""The index file to use. If not specified, a default file
@@ -45,15 +48,15 @@ def main():
         quit("No index file found on disk. Run cindex to create an index.")
 
     n_grams = QueryParser.parse_search_query(args.search_term)
-
-    print("Your N Grams are: " + list_to_string(n_grams))
-
     matching_files = index.get_matching_files(n_grams)
 
-    print ("Your matching files are: " + list_to_string(matching_files))
+    if (args.verbose):
+        print("Your N Grams are: " + list_to_string(n_grams))
+        print ("Found {0} candidate files: {1}".format( len(matching_files), list_to_string(matching_files)))
 
+    pattern = re.compile(args.search_term)
 
-
+    
 
 def list_to_string(collection, delimeter = " "):
     return delimeter.join(collection)
