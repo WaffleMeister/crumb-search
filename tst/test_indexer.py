@@ -7,10 +7,10 @@ class TestIndexer(unittest.TestCase):
     def test_search_directory_for_indexable_files(self):
         indexer = Indexer(["java"])
         searchable_files = indexer.search_directory_for_indexable_files(os.path.abspath(os.path.join( "tst", "test_data")))
-        self.assertEqual(len(searchable_files), 2)
+        self.assertEqual(len(searchable_files), 3)
         indexer = Indexer()
         searchable_files = indexer.search_directory_for_indexable_files(os.path.abspath(os.path.join( "tst", "test_data")))
-        self.assertEqual(len(searchable_files), 6)
+        self.assertEqual(len(searchable_files), 7)
 
     def test_index_directory(self):
         indexer = Indexer()

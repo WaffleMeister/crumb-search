@@ -34,12 +34,12 @@ class Indexer(object):
         return return_list
 
 
-    def index_directory(self,f):
+    def index_directory(self,path):
         """
             This function takes in a file path, and indexes all applicable files
             in that path.
         """
-        files = self.search_directory_for_indexable_files(f)
+        files = self.search_directory_for_indexable_files(path)
 
         for f in files:
             trigram_list = FileParser.parse(f)
