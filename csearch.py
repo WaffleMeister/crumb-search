@@ -2,6 +2,7 @@ import argparse
 import re
 from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
 from src.trigramIndexer.parser.query_parser import QueryParser
+from src.trigramIndexer.searcher.pattern_searcher import PatternSearcher
 
 """
     This script asks for a directory path, indexes that directory, 
@@ -25,6 +26,8 @@ def main():
                             program.
                         """)
 
+    parser.add_argument("-i", "--ignorecase", help="Case insensitive search",
+                        action="store_true", default=False)
     parser.add_argument("-v", "--verbose", help="Enable verbose logging",
                         action="store_true", default=True)
     parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE>",
@@ -43,24 +46,30 @@ def main():
     try:
         index = InMemoryIndexer()
         index.load(args.index_file)
-        print("index loaded successfully!")
-    except FileNotFoundError as f:
+    except FileNotFoundError:
         quit("No index file found on disk. Run cindex to create an index.")
 
     n_grams = QueryParser.parse_search_query(args.search_term)
     matching_files = index.get_matching_files(n_grams)
 
     if (args.verbose):
+        print("Index loaded successfully!")
         print("Your N Grams are: " + list_to_string(n_grams))
-        print ("Found {0} candidate files: {1}".format( len(matching_files), list_to_string(matching_files)))
+        print ("Found {0} candidate files: {1}".format( len(matching_files), list_to_string(matching_files, "\n")))
 
     pattern = re.compile(args.search_term)
 
-    
+    searcher = PatternSearcher()
+
+    matches = searcher.search_files(pattern, matching_files)
+
+    print("Found {0} matches.".format(len(matches)))
+
+    for match in matches:
+        print(match)
 
 def list_to_string(collection, delimeter = " "):
     return delimeter.join(collection)
-
 
 if __name__ == "__main__":
     main()
