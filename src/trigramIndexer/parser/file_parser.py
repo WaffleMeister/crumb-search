@@ -13,6 +13,6 @@ class FileParser(object):
 
         for line in fp.readlines():
             for i in range(len(line) - 2):
-                trigrams.append(line[i : i + 3])
+                trigrams.append(line[i : i + 3].lower())
 
         return trigrams

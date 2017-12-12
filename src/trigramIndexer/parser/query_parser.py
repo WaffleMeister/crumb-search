@@ -9,8 +9,6 @@ class QueryParser:
 
             *
             +
-            ?
-
 
             duc*ccccccc => "ccc"
             duc+catrat => "atr" "cat" "cca" "duc" "rat" "tra"
@@ -34,9 +32,9 @@ class QueryParser:
         while i < len(search_query) - 2:
             n_gram = search_query[i: i + 3]
 
-            if ("*" in n_gram):
+            if ("*" in n_gram or "+" in n_gram):
                 return_set.add('+')
-            elif (i + 3 < len(search_query) and search_query[i + 3] == '*'):
+            elif (i + 3 < len(search_query) and search_query[i + 3] in ['*', '+']):
                 return_set.add('+')
             else:
                 return_set.add(n_gram)
