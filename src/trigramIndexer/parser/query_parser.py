@@ -1,4 +1,4 @@
-from query_parsing_exception import QueryParsingException
+from src.trigramIndexer.parser.query_parsing_exception import QueryParsingException
 
 class QueryParser:
 
