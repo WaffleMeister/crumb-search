@@ -1,12 +1,12 @@
 # crumb-search
 
-CrumbSearch is a python implementation of <a href="https://swtch.com/~rsc/regexp/regexp4.html">Russ Cox's</a> Google Code Search implementation. It allows a user to index a directory of UTF-8 files, and search using a limited regular expression set against that directory.
+CrumbSearch is a python implementation of <a href="https://swtch.com/~rsc/regexp/regexp4.html">Russ Cox's</a> Google Code Search project. It allows a user to index a directory of UTF-8 files, and search using a limited regular expression set against that directory.
 
 ## Getting Started
 
 ### Prerequisites
 
-Python 3 is recommended. This project may have some incompatiabilities with Python 2. You can get Python <a href="https://www.python.org/downloads/">here</a>
+Python 3 is recommended. This project may have some incompatiabilities with Python 2. You can get Python <a href="https://www.python.org/downloads/">here</a>.
 
 ### Installing
 
@@ -34,7 +34,7 @@ Case-Insensitive search against a created index:
 python csearch.py -i -s SEARCH_TERM
 ```
 
-Brute-Force search. This will instead search through all files in the index for the search term, similar to a regular text searching program like grep:
+Brute-Force search. This will instead search through all files in the index for the search term, rather than files which match the search query's ngrams:
 
 ```
 python3 csearch.py -b -s SEARCH_TERM
@@ -49,6 +49,14 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Built With
 
 Python
+
+## Todo:
+
+Integrate with Elastic Search
+
+Prettify some error handling
+
+Handle more regular expression characters. Currently, only '+' and '*' special characters are supported.
 
 ## Acknowledgments
 
