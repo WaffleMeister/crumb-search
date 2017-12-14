@@ -1,8 +1,6 @@
 import unittest
 from src.trigramIndexer.parser.query_parser import QueryParser
 
-
-
 class TestQueryParser(unittest.TestCase):
     
     def test_parse_query(self, query = "cats"):
@@ -14,3 +12,6 @@ class TestQueryParser(unittest.TestCase):
         self.assertSetEqual(QueryParser.parse_search_query("cats*"), {'cat'})
         self.assertSetEqual(QueryParser.parse_search_query("cat*"), {'+'})
         self.assertSetEqual(QueryParser.parse_search_query("docu*"), {'doc'})
+        self.assertSetEqual(QueryParser.parse_search_query("cat+dog"), {'cat', 'dog', 'tdo'})
+        self.assertSetEqual(QueryParser.parse_search_query("cat+do*g"), {'cat'})
+        self.assertSetEqual(QueryParser.parse_search_query("a+hello"), {'ahe','ell','hel','llo'})
