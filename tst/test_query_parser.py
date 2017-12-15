@@ -15,3 +15,4 @@ class TestQueryParser(unittest.TestCase):
         self.assertSetEqual(QueryParser.parse_search_query("cat+dog"), {'cat', 'dog', 'tdo'})
         self.assertSetEqual(QueryParser.parse_search_query("cat+do*g"), {'cat'})
         self.assertSetEqual(QueryParser.parse_search_query("a+hello"), {'ahe','ell','hel','llo'})
+        self.assertSetEqual(QueryParser.parse_search_query("a\+hello"), {'a+h','+he','hel', 'ell', 'llo'})

@@ -13,6 +13,13 @@ class QueryParser:
             char = search_query[i]
 
             if (QueryParser.__is_literal(char)):
+
+                if char == '\\' and i + 1 < len(search_query):
+                    next_char = search_query[i + 1]
+                    if not QueryParser.__is_literal(next_char):
+                        char = search_query[i + 1]
+                        i += 1
+
                 if len(n_gram) == 3:
                     return_set.add(n_gram)
                     n_gram = n_gram[1:len(n_gram)]
@@ -23,7 +30,7 @@ class QueryParser:
                 elif not QueryParser.__is_literal(search_query[i - 1]):
                     invalid_nest = search_query[i - 1: i + 2]
                     raise QueryParsingException("Invalid nested repetition: {0}".format(invalid_nest))
-                
+
                 if char == '*':
                     n_gram = ""
                 elif (char == '+'):
