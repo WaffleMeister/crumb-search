@@ -18,18 +18,3 @@ class PatternSearcher(object):
 
     def match_string(self, matched_file, matched_line):
         return "{0}: {1}".format(matched_file, matched_line)
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    

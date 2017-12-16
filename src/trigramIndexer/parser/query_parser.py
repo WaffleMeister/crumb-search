@@ -4,6 +4,8 @@ class QueryParser:
 
     @staticmethod
     def parse_search_query(search_query):
+
+        print("Search query is: {0}".format(search_query))
         i = 0
         return_set = set()
         n_gram = ""
@@ -27,7 +29,7 @@ class QueryParser:
             else:
                 if i == 0:
                     raise QueryParsingException("Can't begin regex with special char")
-                elif not QueryParser.__is_literal(search_query[i - 1]):
+                elif not QueryParser.__is_literal(search_query[i - 1]) and not search_query[i - 2] == '\\':
                     invalid_nest = search_query[i - 1: i + 2]
                     raise QueryParsingException("Invalid nested repetition: {0}".format(invalid_nest))
 
