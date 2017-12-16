@@ -4,8 +4,6 @@ class QueryParser:
 
     @staticmethod
     def parse_search_query(search_query):
-
-        print("Search query is: {0}".format(search_query))
         i = 0
         return_set = set()
         n_gram = ""
