@@ -1,19 +1,24 @@
 import unittest
 from src.trigramIndexer.parser.query_parser import QueryParser
+from ddt import ddt, data, unpack
+from src.trigramIndexer.indexer import Indexer
 
+@ddt
 class TestQueryParser(unittest.TestCase):
-    
-    def test_parse_query(self, query = "cats"):
+
+    def test_parse_query(self, query="cats"):
         n_grams = QueryParser.parse_search_query(query)
-        self.assertSetEqual(n_grams, {'cat','ats'})
-    
-    def test_parse_regex_query(self):
-        self.assertSetEqual(QueryParser.parse_search_query("cat*ares"), {'are', 'res'})
-        self.assertSetEqual(QueryParser.parse_search_query("cats*"), {'cat'})
-        self.assertSetEqual(QueryParser.parse_search_query("cat*"), {'+'})
-        self.assertSetEqual(QueryParser.parse_search_query("docu*"), {'doc'})
-        self.assertSetEqual(QueryParser.parse_search_query("cat+dog"), {'cat', 'dog', 'tdo'})
-        self.assertSetEqual(QueryParser.parse_search_query("cat+do*g"), {'cat'})
-        self.assertSetEqual(QueryParser.parse_search_query("a+hello"), {'ahe','ell','hel','llo'})
-        self.assertSetEqual(QueryParser.parse_search_query("a\+hello"), {'a+h','+he','hel', 'ell', 'llo'})
-        self.assertSetEqual(QueryParser.parse_search_query("i\+\+"), {'i++'})
+        self.assertSetEqual(n_grams, {'cat', 'ats'})
+
+    @data(("cat*ares", {'are', 'res'}),
+          ("cats*", {'cat'}),
+          ("cat*", {'+'}),
+          ("docu*", {'doc'}),
+          ("cat+dog", {'cat', 'dog', 'tdo'}),
+          ("cat+do*g", {'cat'}),
+          ("a+hello", {'ahe', 'ell', 'hel', 'llo'}),
+          ("a\+hello", {'a+h', '+he', 'hel', 'ell', 'llo'}),
+          ("i\+\+", {'i++'}))
+    @unpack
+    def test_parse_regex_query(self, regular_expression, expected_parse_results):
+        self.assertSetEqual(QueryParser.parse_search_query(regular_expression), expected_parse_results)

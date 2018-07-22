@@ -1,16 +1,18 @@
 import unittest
-import os
+from ddt import ddt, data, unpack
 from src.trigramIndexer.indexer import Indexer
 
+import os
+
+@ddt
 class TestIndexer(unittest.TestCase):
 
-    def test_search_directory_for_indexable_files(self):
-        indexer = Indexer(["java"])
+    @data(('java', 3), ([], 7))
+    @unpack
+    def test_search_directory_for_indexable_files(self, file_type, expected_count):
+        indexer = Indexer(file_type)
         searchable_files = indexer.search_directory_for_indexable_files(os.path.abspath(os.path.join( "tst", "test_data")))
-        self.assertEqual(len(searchable_files), 3)
-        indexer = Indexer()
-        searchable_files = indexer.search_directory_for_indexable_files(os.path.abspath(os.path.join( "tst", "test_data")))
-        self.assertEqual(len(searchable_files), 7)
+        self.assertEqual(len(searchable_files), expected_count)
 
     def test_index_directory(self):
         indexer = Indexer()

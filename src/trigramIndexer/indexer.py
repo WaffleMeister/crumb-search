@@ -33,7 +33,6 @@ class Indexer(object):
 
         return return_list
 
-
     def index_directory(self,path):
         """
             This function takes in a file path, and indexes all applicable files
