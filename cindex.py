@@ -1,7 +1,7 @@
 import argparse
 from src.trigramIndexer.indexer import Indexer
 from src.trigramIndexer.index.elastic_search_index import ElasticSearchIndex
-from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
+from src.trigramIndexer.index.in_memory_index import InMemoryIndex
 
 def main():  
     include_files = ["c", "java", "py", "json", "rb", "txt", "go", "cs"]

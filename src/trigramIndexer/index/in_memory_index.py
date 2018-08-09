@@ -1,6 +1,6 @@
 import pickle
 
-class InMemoryIndexer(object):
+class InMemoryIndex(object):
 
     def __init__(self, index = {}):
         index['+'] = set()

@@ -1,7 +1,7 @@
 import os
 
 from src.trigramIndexer.index.elastic_search_index import ElasticSearchIndex
-from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
+from src.trigramIndexer.index.in_memory_index import InMemoryIndex
 from src.trigramIndexer.parser.file_parser import FileParser
 
 class Indexer(object):
@@ -14,7 +14,7 @@ class Indexer(object):
         if use_elastic_search:
             self.index = ElasticSearchIndex()
         else:
-            self.index = InMemoryIndexer()
+            self.index = InMemoryIndex()
 
         self.include_files = include_files
 

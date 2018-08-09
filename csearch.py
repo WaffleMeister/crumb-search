@@ -1,6 +1,6 @@
 import argparse
 import re
-from src.trigramIndexer.index.in_memory_index import InMemoryIndexer
+from src.trigramIndexer.index.in_memory_index import InMemoryIndex
 from src.trigramIndexer.parser.query_parser import QueryParser
 from src.trigramIndexer.searcher.pattern_searcher import PatternSearcher
 
@@ -16,7 +16,6 @@ from src.trigramIndexer.searcher.pattern_searcher import PatternSearcher
     -q: string query to use
     -e: use Elastic search instead of localized search
 """
-
 
 def main():
 
@@ -46,9 +45,9 @@ def main():
 
     index = None
     try:
-        index = InMemoryIndexer()
+        index = InMemoryIndex()
         index.load(args.index_file)
-    except FileNotFoundError:
+    except OSError:
         quit("No index file found on disk. Run cindex to create an index.")
 
     if args.bruteforce:

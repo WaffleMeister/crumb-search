@@ -4,6 +4,12 @@ class QueryParser:
 
     @staticmethod
     def parse_search_query(search_query):
+        """
+            Given a word, parse out the trigrams
+            associated with that word.
+
+            Ex: "batman" => bat, atm, tma, man
+        """
         i = 0
         return_set = set()
         n_gram = ""
