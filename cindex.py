@@ -12,11 +12,11 @@ def main():
 
     parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE><INCOMPLETE>",
                         action="store_true", default=False)
-    parser.add_argument("-d", "--directory", action="store", dest="directory",
-                        help="Index the specified directory.", required=True)
+    parser.add_argument("-d", "--directories", action="store", dest="directories",
+                        help="List of directories (space sparated) to index.", required=True)
     parser.add_argument("-i", "--include", action="store", dest="include_files",
                         help= """
-                                A comma separated list of extension types that will 
+                                A space separated list of extension types that will 
                                 be indexed by cIndex; others will be ignored. Files 
                                 should be UTF-8 encoded. Default: 
                               """ + include_string)
@@ -25,12 +25,15 @@ def main():
 
     if (args.include_files):
         include_files = args.include_files.replace(" ","").split(",")
-        print(include_files)
+        print("Indexing files of type: " + include_files)
 
     indexer = Indexer(include_files, args.elastic)
 
-    print("Indexing directory: " + args.directory)
-    indexer.index_directory(args.directory)
+    print("Indexing directory: " + args.directories)
+
+    for directory in args.directories:
+        indexer.index_directory(directory)
+
     indexer.index.persist()
 
 if __name__ == "__main__":

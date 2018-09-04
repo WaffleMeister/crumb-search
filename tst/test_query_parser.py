@@ -7,10 +7,6 @@ from src.trigramIndexer.indexer import Indexer
 @ddt
 class TestQueryParser(unittest.TestCase):
 
-    def test_parse_query(self, query="cats"):
-        n_grams = QueryParser.parse_search_query(query)
-        self.assertSetEqual(n_grams, {'cat', 'ats'})
-
     @data(
         ("cat*ares", {'are', 'res'}),
         ("cats*", {'cat'}),

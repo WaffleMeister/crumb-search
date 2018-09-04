@@ -17,8 +17,7 @@ class WordBreaker:
 
         current_char = search_term[idx]
 
-
-        if WordBreaker.is_special_char(search_term, idx):
+        if WordBreaker.__is_special_char(search_term, idx):
             """
                 For '?' characters, create two versions of 
                 the input word, one with, and one without the 
@@ -27,7 +26,7 @@ class WordBreaker:
                 rob?in => roin, robin
                 batm?an => batan, batman
             """
-            # Do not include the question mark itself; skip over it.
+            # Do not include the question mark; skip over it.
             WordBreaker.break_apart_search_term(search_term,
                                     idx + 1,
                                     created_term,
@@ -43,10 +42,10 @@ class WordBreaker:
                                                 created_term + current_char,
                                                 return_list)
 
-        return return_list
+        return set(return_list)
 
     @staticmethod
-    def is_special_char(search_term, idx):
+    def __is_special_char(search_term, idx):
         if idx > 0 and search_term[idx - 1] == '\\':
             return False
         else:

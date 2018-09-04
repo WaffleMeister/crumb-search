@@ -1,7 +1,4 @@
+class SearchTerm:
 
-
-class SearchQuery:
-
-    
-    def __init__(self, trigrams = []):
+    def __init__(self, trigrams = [[]]):
         self.trigrams = trigrams

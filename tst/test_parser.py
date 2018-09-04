@@ -4,9 +4,6 @@ from src.trigramIndexer.parser.file_parser import FileParser
 
 class TestParser(unittest.TestCase):
 
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
-
     def test_parse(self):
         file_path = os.path.abspath("tst/test_data/file")
         trigram_list = FileParser.parse(file_path)
