@@ -9,7 +9,7 @@ class InMemoryIndex(object):
         self.index_directory = self.__get_index_directory()
     
     def __get_index_directory(self):
-        backup_path = os.path.join(os.environ['HOME'], '.indexDirectory')
+        backup_path = os.path.join(os.path.expanduser('~'), '.indexDirectory')
         return os.environ.get('CSEARCHINDEX', backup_path)    
 
     def get_matching_files(self, trigram_list):
