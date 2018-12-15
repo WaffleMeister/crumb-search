@@ -19,7 +19,11 @@ class Indexer(object):
         self.include_files = include_files
 
     def search_directory_for_indexable_files(self, path):
-
+        """
+            This function is given a directory, and returns all files in that 
+            directory which are of the extension we wish to index. We only 
+            index files that are in the include_file list
+        """
         # Get all the files in the directory
         file_list = [os.path.join(path, f) for f in os.listdir(path)]
 
