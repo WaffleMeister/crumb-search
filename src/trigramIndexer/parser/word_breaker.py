@@ -1,5 +1,16 @@
 class WordBreaker:
 
+    """
+        Parse apart a given phrase to its matching sub-phrases based on special
+        regex characters.
+
+        Supported chars: ?, 
+                        (A | B) (OR group)
+
+        TODO:
+            Figure out if I should support nested OR operators, 
+            or just throw an exeption and not support that entirely
+    """
     @staticmethod
     def break_apart_search_term(search_term,
                                 idx=0,
@@ -28,26 +39,15 @@ class WordBreaker:
                 rob?in => roin, robin
                 batm?an => batan, batman
 
-
                 bat(man|woman) => batman, batwoman
-
-                When you see a paren, skip ahead until you find a | character
-                then, go on until you close that paren
-
-                take those two substrings, and return those....
             """
             if current_char == '?':
                 # Do something for ? characters
                 WordBreaker.__handle_question_mark(
                     search_term, idx, created_term, return_list)
             if current_char == '(':
-                pass
-                # This is an opening bracket, which deliniates an OR operation
-                # for a regex.
-
-                # That's going to be different for ( | ) characters,
-                # which mean some kind of split should happen.
-
+                WordBreaker.__handle_opening_bracket(
+                    search_term, idx, created_term, return_list)
         else:
             WordBreaker.break_apart_search_term(search_term,
                                                 idx + 1,
@@ -61,7 +61,33 @@ class WordBreaker:
                                  idx,
                                  created_term,
                                  return_list):
-        pass
+        # Get the index of the | character
+        pipe_idx = search_term.find('|')
+
+        # Doesn't handle nested OR operations, make that a TODO
+        closing_bracked_idx = search_term.find(')')
+
+        left_choice = search_term[idx + 1: pipe_idx]
+        right_choice = search_term[pipe_idx + 1: closing_bracked_idx]
+
+        search_term_remainder = search_term[closing_bracked_idx + 1:]
+
+        search_term_left_choice = search_term[:idx] + \
+            left_choice + \
+            search_term_remainder
+
+        serach_term_right_choice = search_term[:idx] + \
+            right_choice + \
+            search_term_remainder
+
+        WordBreaker.break_apart_search_term(search_term_left_choice,
+                                            idx,
+                                            created_term,
+                                            return_list)
+        WordBreaker.break_apart_search_term(serach_term_right_choice,
+                                            idx,
+                                            created_term,
+                                            return_list)
 
     @staticmethod
     def __handle_question_mark(search_term,
@@ -79,11 +105,9 @@ class WordBreaker:
                                             created_term[0:-1],
                                             return_list)
 
-        print("Do nothing")
-
     @staticmethod
     def __is_special_char(search_term, idx):
         if idx > 0 and search_term[idx - 1] == '\\':
             return False
         else:
-            return search_term[idx] == '?'
+            return search_term[idx] == '?' or search_term[idx] == '('

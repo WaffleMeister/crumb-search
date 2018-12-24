@@ -10,7 +10,11 @@ class TestWordBreaker(unittest.TestCase):
         ("robin", ["robin"]),
         ("rob?in", ["robin", "roin"]),
         ("bu?rg?er", ["burger", "brger", "brer", "burer"]),
-        ("ca?ts", ["cats", "cts"])
+        ("ca?ts", ["cats", "cts"]),
+        ("bat(man|woman)", ["batman", "batwoman"]),
+        ("bat(man|woman) the avenger", ["batman the avenger", "batwoman the avenger"]),
+        ("bat(man|woman) the b?at", ["batman the bat", "batman the at", "batwoman the at", "batwoman the bat"]),
+        ("bat(man|cant?)", ["batman", "batcant", "batcan"])
     )
     @unpack
     def test_breakup_words(self, search_term, expected_parse_results):
