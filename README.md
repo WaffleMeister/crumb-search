@@ -50,14 +50,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 Python
 
-## Todo:
-
-Integrate with Elastic Search
-
-Prettify some error handling
-
-Handle more regular expression characters. Currently, only '+' and '*' special characters are supported.
-
 ## Acknowledgments
 
 * Much thanks to https://twitter.com/_rsc?lang=en
