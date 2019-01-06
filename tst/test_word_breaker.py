@@ -14,7 +14,8 @@ class TestWordBreaker(unittest.TestCase):
         ("bat(man|woman)", ["batman", "batwoman"]),
         ("bat(man|woman) the avenger", ["batman the avenger", "batwoman the avenger"]),
         ("bat(man|woman) the b?at", ["batman the bat", "batman the at", "batwoman the at", "batwoman the bat"]),
-        ("bat(man|cant?)", ["batman", "batcant", "batcan"])
+        ("bat(man|cant?)", ["batman", "batcant", "batcan"]),
+        ("bat(man|man(child|baby))", ["batman", "batmanchild", "batmanbaby"])
     )
     @unpack
     def test_breakup_words(self, search_term, expected_parse_results):
