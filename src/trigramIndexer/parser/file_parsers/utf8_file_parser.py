@@ -1,9 +1,8 @@
 import os
 
-class FileParser(object):
+class UTF8FileParser(object):
 
-    @staticmethod
-    def parse(file_name):
+    def parse(self, file_name):
         """
             Read in the file, and break it up into trigrams.
             return the list of trigrams.
@@ -15,4 +14,5 @@ class FileParser(object):
             for i in range(len(line) - 2):
                 trigrams.append(line[i : i + 3].lower())
 
+        fp.close()
         return trigrams

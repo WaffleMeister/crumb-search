@@ -2,7 +2,8 @@ import os
 
 from src.trigramIndexer.index.elastic_search_index import ElasticSearchIndex
 from src.trigramIndexer.index.in_memory_index import InMemoryIndex
-from src.trigramIndexer.parser.file_parser import FileParser
+from src.trigramIndexer.parser.file_parsers.file_parser_factory import FileParserFactory
+
 
 class Indexer(object):
     """
@@ -45,7 +46,16 @@ class Indexer(object):
         files = self.search_directory_for_indexable_files(path)
 
         for f in files:
-            trigram_list = FileParser.parse(f)
+            # Figure out what kind of file that is, get the right 
+            # file parser from that, and get the trigram list 
+            # out of that file.
+
+            # Factory pattern?
+            file_name, extension = os.path.splitext(f)
+
+            # Won't work. Need to create tool that gets a file path's type.
+            file_parser = FileParserFactory().get_parser_for_filetype(extension)
+            trigram_list = file_parser.parse(f)
             self.index.store_in_index(trigram_list, f)
         
         return self.index

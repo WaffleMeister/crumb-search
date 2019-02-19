@@ -9,7 +9,7 @@ class TestIndexer(unittest.TestCase):
 
     @data(
         ('java', 3),
-        ([], 7)
+        ([], 8)
     )
     @unpack
     def test_search_directory_for_indexable_files(self, file_type, expected_count):
