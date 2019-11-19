@@ -13,7 +13,7 @@ def main():
     parser.add_argument("-e", "--elastic", help="Use Elastic search index <REMOTE><INCOMPLETE>",
                         action="store_true", default=False)
     parser.add_argument("-d", "--directories", action="store", dest="directories",
-                        help="List of directories (space sparated) to index.", required=True)
+                        help="List of directories (comma sparated) to index.", required=True)
     parser.add_argument("-i", "--include", action="store", dest="include_files",
                         help= """
                                 A space separated list of extension types that will 
@@ -24,14 +24,14 @@ def main():
     args = parser.parse_args()
 
     if (args.include_files):
-        include_files = args.include_files.replace(" ","").split(",")
-        print("Indexing files of type: " + include_files)
+        include_files = args.include_files.split(',')
+        print("Indexing files of type: " + ', '.join(include_files))
 
     indexer = Indexer(include_files, args.elastic)
 
     print("Indexing directory: " + args.directories)
 
-    for directory in args.directories:
+    for directory in args.directories.split(','):
         indexer.index_directory(directory)
 
     indexer.index.persist()

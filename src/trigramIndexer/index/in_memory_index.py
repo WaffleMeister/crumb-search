@@ -38,8 +38,8 @@ class InMemoryIndex(object):
 
     def create_directory(self, path):
         directory = os.path.dirname(path)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        if not os.path.exists(path):
+            os.makedirs(path)
 
     def load(self, file_name = "index_file"):
         with open(os.path.join(self.index_directory, file_name), "rb") as f:
